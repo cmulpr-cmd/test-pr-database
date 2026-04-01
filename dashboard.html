@@ -258,16 +258,21 @@ function Dashboard(){
 
   const handleLogout=()=>{localStorage.removeItem("cc_pr_user");localStorage.removeItem("cc_pr_lastActivity");window.location.href="index.html";};
 
-  const handleChangePassword = async () => {
-    if (!oldPass || !newPass || !confirmPass) {
+const handleChangePassword = async () => {
+    // ตัดช่องว่างหน้า-หลัง เผื่อผู้ใช้เผลอกด Spacebar
+    const safeOldPass = oldPass.trim();
+    const safeNewPass = newPass.trim();
+    const safeConfirmPass = confirmPass.trim();
+
+    if (!safeOldPass || !safeNewPass || !safeConfirmPass) {
         setMsg({ type: 'error', text: 'กรุณากรอกข้อมูลให้ครบถ้วน' });
         return;
     }
-    if (newPass !== confirmPass) {
+    if (safeNewPass !== safeConfirmPass) {
       setMsg({ type: 'error', text: 'รหัสผ่านใหม่ไม่ตรงกัน' });
       return;
     }
-    if (newPass.length < 6) {
+    if (safeNewPass.length < 6) {
       setMsg({ type: 'error', text: 'รหัสผ่านใหม่ต้องมีอย่างน้อย 6 ตัวอักษร' });
       return;
     }
@@ -282,8 +287,8 @@ function Dashboard(){
         body: new URLSearchParams({
           action: 'changePassword',
           username: user.username,
-          oldPassword: oldPass,
-          newPassword: newPass
+          oldPassword: safeOldPass,
+          newPassword: safeNewPass
         })
       });
 
