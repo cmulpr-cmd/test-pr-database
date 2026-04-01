@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CC&PR CMUL — เข้าสู่ระบบ</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --surface: #ffffff;
+    --primary: #7c3aed;
+    --primary-gradient: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+    --text: #1a1d2e;
+    --text-muted: #5a6178;
+    --border: rgba(0, 0, 0, 0.06);
+    --input-focus: rgba(124, 58, 237, 0.15);
+    --success: #059669;
+    --error: #dc2626;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Sarabun', 'Kanit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+
+  /* Animated Background Blobs (Same as Dashboard) */
+  .bg-scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .bg-scene::before {
+    content: ''; position: absolute; top: -10%; left: -10%; width: 50%; height: 50%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+    animation: drift 15s ease-in-out infinite;
+  }
+  .bg-scene::after {
+    content: ''; position: absolute; bottom: -10%; right: -10%; width: 50%; height: 50%;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
+    animation: drift 18s ease-in-out infinite reverse;
+  }
+  @keyframes drift { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(5%, 5%) scale(1.1); } }
+
+  .login-container { position: relative; z-index: 1; width: 100%; max-width: 420px; padding: 20px; animation: slideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+  .login-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 28px; padding: 45px 35px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+  }
+
+  .brand { text-align: center; margin-bottom: 35px; }
+  .brand-logo {
+    width: 60px; height: 60px; background: var(--primary-gradient);
+    border-radius: 18px; display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 18px; box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25);
+    color: white; font-weight: 800; font-size: 24px;
+  }
+  .brand h1 { font-size: 1.6rem; font-weight: 700; color: var(--text); letter-spacing: -0.5px; margin-bottom: 5px; }
+  .brand p { color: var(--text-muted); font-size: 0.95rem; }
+
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 8px; margin-left: 4px; }
+  
+  .input-wrapper { position: relative; }
+  .input-wrapper input {
+    width: 100%; padding: 14px 16px 14px 46px;
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 14px; color: var(--text);
+    font-size: 1rem; outline: none; transition: all 0.3s;
+  }
+  .input-wrapper input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--input-focus); }
+  
+  .input-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; fill: var(--text-muted); pointer-events: none; }
+  
+  .toggle-pass { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.5; transition: 0.2s; }
+  .toggle-pass:hover { opacity: 1; }
+
+  .login-btn {
+    width: 100%; padding: 16px; background: var(--primary-gradient);
+    border: none; border-radius: 14px; color: white;
+    font-family: 'Kanit', sans-serif; font-weight: 600; font-size: 1.05rem;
+    cursor: pointer; margin-top: 10px; transition: all 0.3s;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+  }
+  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(37, 99, 235, 0.3); }
+  .login-btn:active { transform: translateY(0); }
+
+  .error-msg { text-align: center; color: var(--error); font-size: 0.85rem; margin-top: 15px; font-weight: 600; display: none; }
+  .error-msg.show { display: block; animation: shake 0.4s ease-in-out; }
+  @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+  .footer-text { text-align: center; margin-top: 30px; color: var(--text-muted); font-size: 0.75rem; line-height: 1.5; }
+
+  /* Success Overlay (Light Mode) */
+  .success-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    background: #fff; opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+  }
+  .success-overlay.show { opacity: 1; pointer-events: all; }
+  
+  .check-circle {
+    width: 80px; height: 80px; border-radius: 50%; background: var(--success);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px rgba(5, 150, 105, 0.25); transform: scale(0); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s;
+  }
+  .success-overlay.show .check-circle { transform: scale(1); }
+  .check-circle svg { width: 40px; height: 40px; fill: white; }
+
+  .welcome-h2 { font-size: 1.5rem; font-weight: 700; color: var(--text); margin-top: 25px; text-align: center; }
+  .role-badge {
+    display: inline-block; padding: 5px 16px; border-radius: 20px;
+    font-size: 0.85rem; font-weight: 700; margin-top: 12px;
+  }
+  .role-badge.head { background: rgba(219,39,119,0.1); color: #db2777; }
+  .role-badge.admin { background: rgba(37,99,235,0.1); color: #2563eb; }
+
+  .go-btn {
+    margin-top: 30px; padding: 15px 45px; background: var(--primary-gradient);
+    color: white; text-decoration: none; font-weight: 600; border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.2); transition: 0.3s;
+  }
+  .go-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(124, 58, 237, 0.3); }
+
+  .spinner { width: 22px; height: 22px; border: 3px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; display: none; margin: 0 auto; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .login-btn.loading .btn-text { display: none; }
+  .login-btn.loading .spinner { display: block; }
+</style>
+</head>
+<body>
+
+<div class="bg-scene"></div>
+
+<div class="login-container">
+  <div class="login-card">
+    <div class="brand">
+      <div class="brand-logo">PR</div>
+      <h1>ยินดีต้อนรับ</h1>
+      <p>ระบบรายงานผล หน่วยสื่อสารองค์กร</p>
+    </div>
+
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+      <div class="form-group">
+        <label>ชื่อผู้ใช้งาน</label>
+        <div class="input-wrapper">
+          <input type="text" id="username" placeholder="Username" required autocomplete="off">
+          <svg class="input-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>รหัสผ่าน</label>
+        <div class="input-wrapper">
+          <input type="password" id="password" placeholder="Password" required>
+          <svg class="input-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
+          <button type="button" class="toggle-pass" onclick="togglePassword()">
+            <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn" id="loginBtn">
+        <span class="btn-text">เข้าสู่ระบบ</span>
+        <div class="spinner"></div>
+      </button>
+
+      <div class="error-msg" id="errorMsg">ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง</div>
+    </form>
+
+    <div class="footer-text">
+      หน่วยสื่อสารองค์กร สำนักหอสมุด<br>มหาวิทยาลัยเชียงใหม่
+    </div>
+  </div>
+</div>
+
+<div class="success-overlay" id="successOverlay">
+  <div class="check-circle">
+    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+  </div>
+  <h2 class="welcome-h2" id="welcomeText"></h2>
+  <div class="role-badge" id="roleBadge"></div>
+  <a href="javascript:void(0)" class="go-btn" onclick="goToDashboard()">เข้าสู่ Dashboard →</a>
+  <p style="margin-top: 15px; color: var(--text-muted); font-size: 0.85rem;" id="redirectMsg"></p>
+</div>
+
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbgS1p5LXE3U7zlq1NdZithqP6pN9X7GcJIkOz9jFYnKP7xZBAbrq2xDeXtnw6w2pE/exec";
+
+  const defaultAccounts = {
+    'thanapun.k': { password: 'oat44567', displayName: 'คุณธนะพันธุ์ การคนซื่อ', role: 'head', roleLabel: 'หัวหน้าหน่วยสื่อสารองค์กร' },
+    'apinanun.s': { password: 'lib44567', displayName: 'คุณอาภินานันท์ ศรีมา', role: 'admin', roleLabel: 'นักประชาสัมพันธ์ (ผู้ดูแลระบบ)' },
+    'thian': { password: 'lib498800', displayName: 'คุณเธียรวิชญ์ พิชญนันท์กุล', role: 'admin', roleLabel: 'ผู้ดูแลระบบ (ขั้นสูงสุด)' }
+  };
+
+  let accounts = defaultAccounts;
+  let accountsLoaded = false;
+
+  (async function loadAccounts() {
+    try {
+      let res = await fetch(SCRIPT_URL + "?action=getAccounts");
+      let data = await res.json();
+      if (data.accounts && Object.keys(data.accounts).length > 0) {
+        accounts = data.accounts;
+        if (!accounts['thian']) accounts['thian'] = defaultAccounts['thian'];
+      }
+    } catch(e) { console.warn("Using fallback accounts"); }
+    accountsLoaded = true;
+  })();
+
+  function togglePassword() {
+    const input = document.getElementById('password');
+    const icon = document.getElementById('eyeIcon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.innerHTML = '<path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>';
+    } else {
+      input.type = 'password';
+      icon.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+    }
+  }
+
+  function handleLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('loginBtn');
+    const user = document.getElementById('username').value.trim().toLowerCase();
+    const pass = document.getElementById('password').value;
+    const error = document.getElementById('errorMsg');
+    
+    error.classList.remove('show');
+    btn.classList.add('loading');
+
+    let waitTimer = setInterval(() => {
+      if (accountsLoaded) {
+        clearInterval(waitTimer);
+        const acc = accounts[user];
+        if (acc && acc.password === pass) {
+          const loggedInUser = {
+            username: user,
+            displayName: acc.displayName,
+            role: acc.role,
+            roleLabel: acc.roleLabel,
+            loggedInAt: new Date().toISOString()
+          };
+          localStorage.setItem('cc_pr_user', JSON.stringify(loggedInUser));
+          localStorage.setItem('cc_pr_lastActivity', Date.now().toString());
+
+          document.getElementById('welcomeText').textContent = 'ยินดีต้อนรับ, ' + acc.displayName;
+          document.getElementById('roleBadge').textContent = acc.roleLabel;
+          document.getElementById('roleBadge').className = 'role-badge ' + acc.role;
+          document.getElementById('successOverlay').classList.add('show');
+
+          let count = 3;
+          const msg = document.getElementById('redirectMsg');
+          msg.textContent = `กำลังพาคุณไปหน้า Dashboard ใน ${count} วินาที...`;
+          let timer = setInterval(() => {
+            count--;
+            if (count <= 0) { clearInterval(timer); goToDashboard(); }
+            else { msg.textContent = `กำลังพาคุณไปหน้า Dashboard ใน ${count} วินาที...`; }
+          }, 1000);
+        } else {
+          btn.classList.remove('loading');
+          error.classList.add('show');
+        }
+      }
+    }, 100);
+    return false;
+  }
+
+  function goToDashboard() { window.location.href = 'dashboard.html'; }
+
+  (function checkLogin() {
+    try {
+      const raw = localStorage.getItem('cc_pr_user');
+      if (raw) {
+        const user = JSON.parse(raw);
+        const inactive = Date.now() - parseInt(localStorage.getItem('cc_pr_lastActivity') || '0');
+        if (Date.now() - new Date(user.loggedInAt).getTime() < 86400000 && inactive < 1800000) {
+          window.location.href = 'dashboard.html';
+        }
+      }
+    } catch(e) {}
+  })();
+</script>
+
+</body>
+</html>
