@@ -30,7 +30,7 @@
     overflow: hidden; position: relative;
   }
 
-  /* Animated Background Blobs (Same as Dashboard) */
+  /* Animated Background Blobs */
   .bg-scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
   .bg-scene::before {
     content: ''; position: absolute; top: -10%; left: -10%; width: 50%; height: 50%;
@@ -116,14 +116,12 @@
 
   .status-icon-wrap { height: 80px; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; }
 
-  /* อนิเมชันโหลดดิ้ง */
   .auth-spinner {
     width: 65px; height: 65px; border: 4px solid #f1f5f9;
     border-top-color: var(--primary); border-radius: 50%;
     animation: spin 1s linear infinite;
   }
 
-  /* อนิเมชันติ๊กถูก */
   .check-circle {
     width: 75px; height: 75px; border-radius: 50%; background: var(--success);
     display: none; align-items: center; justify-content: center;
@@ -224,26 +222,20 @@
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbgS1p5LXE3U7zlq1NdZithqP6pN9X7GcJIkOz9jFYnKP7xZBAbrq2xDeXtnw6w2pE/exec";
 
-  const defaultAccounts = {
-    'thanapun.k': { password: 'oat44567', displayName: 'คุณธนะพันธุ์ การคนซื่อ', role: 'head', roleLabel: 'หัวหน้าหน่วยสื่อสารองค์กร' },
-    'apinanun.s': { password: 'lib44567', displayName: 'คุณอาภินานันท์ ศรีมา', role: 'admin', roleLabel: 'นักประชาสัมพันธ์ (ผู้ดูแลระบบ)' },
-    'thian': { password: 'thian220340', displayName: 'คุณเธียรวิชญ์ พิชญนันท์กุล', role: 'admin', roleLabel: 'ผู้ดูแลระบบ (ขั้นสูงสุด)' }
-    'chamaiporn.k': { password: 'khing44567', displayName: 'คุณชไมพร เขื่อนจินดาวงศ์', role: 'admin', roleLabel: 'นักช่างศิลป์ (ผู้ดูแลระบบ)' }
-  };
-
-  let accounts = defaultAccounts;
+  let accounts = {};
   let accountsLoaded = false;
 
   (async function loadAccounts() {
     try {
       let res = await fetch(SCRIPT_URL + "?action=getAccounts");
       let data = await res.json();
-      if (data.accounts && Object.keys(data.accounts).length > 0) {
+      if (data.accounts) {
         accounts = data.accounts;
-        if (!accounts['thian']) accounts['thian'] = defaultAccounts['thian'];
+        accountsLoaded = true;
       }
-    } catch(e) { console.warn("Using fallback accounts"); }
-    accountsLoaded = true;
+    } catch(e) { 
+        console.error("Failed to load accounts", e);
+    }
   })();
 
   function togglePassword() {
@@ -268,66 +260,61 @@
     error.classList.remove('show');
     btn.classList.add('loading');
 
-    let waitTimer = setInterval(() => {
-      if (accountsLoaded) {
-        clearInterval(waitTimer);
-        const acc = accounts[user];
-        if (acc && acc.password === pass) {
-          // โชว์หน้าจอโหลดแบบหมุนๆ ก่อน
-          document.getElementById('authSpinner').style.display = 'block';
-          document.getElementById('authCheck').style.display = 'none';
-          document.getElementById('welcomeText').innerHTML = 'กำลังตรวจสอบข้อมูล<br>และเตรียมระบบ...';
-          document.getElementById('roleBadge').style.display = 'none';
-          document.getElementById('goBtn').style.display = 'none';
-          document.getElementById('redirectMsg').style.display = 'none';
-          document.getElementById('successOverlay').classList.add('show');
+    if (!accountsLoaded) {
+      error.textContent = "กำลังเชื่อมต่อฐานข้อมูล โปรดลองอีกครั้งในสักครู่...";
+      error.classList.add('show');
+      btn.classList.remove('loading');
+      return false;
+    }
 
-          // หน่วงเวลา 3 วินาที (3000 ms) ก่อนเปลี่ยนเป็นเครื่องหมายติ๊กถูกและข้อความยินดีต้อนรับ
-          setTimeout(() => {
-            const loggedInUser = {
-              username: user,
-              displayName: acc.displayName,
-              role: acc.role,
-              roleLabel: acc.roleLabel,
-              loggedInAt: new Date().toISOString()
-            };
-            localStorage.setItem('cc_pr_user', JSON.stringify(loggedInUser));
-            localStorage.setItem('cc_pr_lastActivity', Date.now().toString());
+    const acc = accounts[user];
+    if (acc && acc.password === pass) {
+        document.getElementById('authSpinner').style.display = 'block';
+        document.getElementById('authCheck').style.display = 'none';
+        document.getElementById('welcomeText').innerHTML = 'กำลังตรวจสอบข้อมูล<br>และเตรียมระบบ...';
+        document.getElementById('roleBadge').style.display = 'none';
+        document.getElementById('goBtn').style.display = 'none';
+        document.getElementById('redirectMsg').style.display = 'none';
+        document.getElementById('successOverlay').classList.add('show');
 
-            // ซ่อนที่หมุนๆ และโชว์เครื่องหมายติ๊กถูกแบบเด้ง (Pop)
-            document.getElementById('authSpinner').style.display = 'none';
-            document.getElementById('authCheck').style.display = 'flex';
-            
-            // จัดเรียงข้อความ ยินดีต้อนรับ (บรรทัดบน) และ ชื่อ (บรรทัดล่างตัวใหญ่)
-            document.getElementById('welcomeText').innerHTML = 'ยินดีต้อนรับ<span class="welcome-name">' + acc.displayName + '</span>';
-            
-            const badge = document.getElementById('roleBadge');
-            badge.textContent = acc.roleLabel;
-            badge.className = 'role-badge ' + acc.role;
-            badge.style.display = 'inline-block';
+        setTimeout(() => {
+          const loggedInUser = {
+            username: user,
+            displayName: acc.displayName,
+            role: acc.role,
+            roleLabel: acc.roleLabel,
+            loggedInAt: new Date().toISOString()
+          };
+          localStorage.setItem('cc_pr_user', JSON.stringify(loggedInUser));
+          localStorage.setItem('cc_pr_lastActivity', Date.now().toString());
 
-            document.getElementById('goBtn').style.display = 'inline-block';
-            
-            const msg = document.getElementById('redirectMsg');
-            msg.style.display = 'block';
-            
-            // เริ่มนับถอยหลังเข้าสู่ Dashboard
-            let count = 3;
-            msg.textContent = `กำลังพาคุณไปหน้า Dashboard ใน ${count} วินาที...`;
-            let timer = setInterval(() => {
-              count--;
-              if (count <= 0) { clearInterval(timer); goToDashboard(); }
-              else { msg.textContent = `กำลังพาคุณไปหน้า Dashboard ใน ${count} วินาที...`; }
-            }, 1000);
+          document.getElementById('authSpinner').style.display = 'none';
+          document.getElementById('authCheck').style.display = 'flex';
+          document.getElementById('welcomeText').innerHTML = 'ยินดีต้อนรับ<span class="welcome-name">' + acc.displayName + '</span>';
+          
+          const badge = document.getElementById('roleBadge');
+          badge.textContent = acc.roleLabel;
+          badge.className = 'role-badge ' + acc.role;
+          badge.style.display = 'inline-block';
 
-          }, 3000); // 3000 คือ 3 วินาที
+          document.getElementById('goBtn').style.display = 'inline-block';
+          const msg = document.getElementById('redirectMsg');
+          msg.style.display = 'block';
+          
+          let count = 3;
+          msg.textContent = `กำลังพาคุณไปหน้า Dashboard ใน ${count} วินาที...`;
+          let timer = setInterval(() => {
+            count--;
+            if (count <= 0) { clearInterval(timer); goToDashboard(); }
+            else { msg.textContent = `กำลังพาคุณไปหน้า Dashboard ใน ${count} วินาที...`; }
+          }, 1000);
+        }, 3000);
 
-        } else {
-          btn.classList.remove('loading');
-          error.classList.add('show');
-        }
-      }
-    }, 100);
+    } else {
+      error.textContent = "ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง";
+      btn.classList.remove('loading');
+      error.classList.add('show');
+    }
     return false;
   }
 
