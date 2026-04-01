@@ -17,6 +17,7 @@
   --text-dim: #5a6178;
   --text-muted: #8c93a8;
   --border: #e2e8f0;
+  --primary: #7c3aed;
 }
 body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
@@ -33,7 +34,6 @@ body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--b
 /* Topbar */
 .topbar { padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; }
 .topbar-brand { display: flex; align-items: center; gap: 12px; }
-.brand-icon { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #7c3aed, #2563eb); display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; box-shadow: 0 4px 16px rgba(124,58,237,0.25); font-weight:800; }
 .brand-text { font-size: 14px; font-weight: 600; color: var(--text-dim); }
 .brand-text span { color: var(--text); font-weight: 700; }
 .user-actions { display: flex; align-items: center; gap: 12px; }
@@ -41,8 +41,6 @@ body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--b
 .user-name { color: var(--text); font-size: 14px; font-weight: 700; }
 .btn-logout { padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; border:none; background: rgba(239,68,68,0.1); color: #ef4444; font-family: 'Noto Sans Thai', sans-serif; transition: 0.2s; }
 .btn-logout:hover { background: rgba(239,68,68,0.15); }
-
-/* ปุ่มตั้งค่า (เฟือง) */
 .btn-icon { background: none; border: none; font-size: 20px; cursor: pointer; padding: 8px; border-radius: 50%; transition: 0.2s; display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
 .btn-icon:hover { background: rgba(0,0,0,0.05); color: var(--text); }
 
@@ -56,8 +54,6 @@ body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--b
 /* Cards Grid */
 .cards-section { flex: 1; padding: 20px 40px 80px; max-width: 1200px; margin: 0 auto; width: 100%; }
 .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 30px; }
-
-/* Custom Report Card */
 .custom-card { background: var(--surface); border-radius: 20px; padding: 35px 30px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
 .custom-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.08); }
 .card-top-line { position: absolute; top: 0; left: 0; right: 0; height: 6px; }
@@ -68,13 +64,11 @@ body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--b
 .theme-internal .c-badge { background: #d1fae5; color: #047857; }
 .theme-internal .c-stat-val { color: #0284c7; }
 .theme-internal .c-btn { background: linear-gradient(90deg, #10b981, #0ea5e9); }
-
 .theme-external .card-top-line { background: linear-gradient(90deg, #ec4899, #8b5cf6); }
 .theme-external .c-icon-box { background: #fdf2f8; color: #be185d; }
 .theme-external .c-badge { background: #fce7f3; color: #be185d; }
 .theme-external .c-stat-val { color: #7c3aed; }
 .theme-external .c-btn { background: linear-gradient(90deg, #d946ef, #8b5cf6); }
-
 .theme-empty .card-top-line { background: #e2e8f0; }
 .theme-empty .c-icon-box { background: #f1f5f9; color: #94a3b8; }
 .theme-empty .c-badge { background: #f1f5f9; color: #64748b; }
@@ -84,12 +78,10 @@ body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--b
 .c-badge { padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; font-family: 'Noto Sans Thai'; }
 .c-title { font-family: 'Noto Sans Thai', sans-serif; font-size: 20px; font-weight: 800; line-height: 1.4; color: var(--text); margin-bottom: 12px; }
 .c-desc { font-size: 14px; color: var(--text-dim); line-height: 1.6; flex: 1; }
-
 .c-stats-row { display: flex; gap: 24px; margin-top: 24px; padding-top: 24px; border-top: 1px dashed #e2e8f0; }
 .c-stat-col { flex: 1; }
 .c-stat-val { font-size: 24px; font-weight: 800; font-family: 'Noto Sans Thai'; margin-bottom: 4px; letter-spacing: -0.5px; }
 .c-stat-label { font-size: 11px; color: var(--text-muted); font-weight: 600; }
-
 .c-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 12px; color: #fff; text-decoration: none; font-family: 'Noto Sans Thai'; font-size: 14px; font-weight: 700; margin-top: 24px; width: fit-content; transition: opacity 0.3s; border: none; cursor:pointer; }
 .c-btn:hover { opacity: 0.9; }
 .c-btn-empty { background: #e2e8f0; color: #64748b; cursor: not-allowed; }
@@ -116,18 +108,23 @@ body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--b
 .modal-card { background: #fff; width: 90%; max-width: 400px; border-radius: 20px; padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); transform: translateY(20px); transition: 0.3s; }
 .modal-overlay.active .modal-card { transform: translateY(0); }
 .modal-title { font-size: 20px; font-weight: 800; margin-bottom: 20px; color: var(--text); }
-.modal-input { width: 100%; padding: 12px 16px; margin-bottom: 16px; border: 1px solid var(--border); border-radius: 10px; font-family: 'Sarabun', sans-serif; outline: none; transition: 0.2s; }
-.modal-input:focus { border-color: var(--primary); }
-.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
 .btn-cancel { padding: 10px 16px; border: none; background: #f1f5f9; color: #64748b; border-radius: 10px; cursor: pointer; font-weight: 600; font-family: 'Noto Sans Thai'; }
 .btn-save { padding: 10px 16px; border: none; background: linear-gradient(135deg, #7c3aed, #2563eb); color: #fff; border-radius: 10px; cursor: pointer; font-weight: 600; font-family: 'Noto Sans Thai'; }
 .btn-save:disabled { opacity: 0.7; cursor: not-allowed; }
 .msg-alert { font-size: 13px; margin-bottom: 15px; padding: 10px; border-radius: 8px; display: none; text-align: center;}
 .msg-alert.error { background: #fef2f2; color: #dc2626; display: block; }
 .msg-alert.success { background: #ecfdf5; color: #059669; display: block; }
+
+/* ช่องกรอกรหัสแบบมีปุ่มเปิดตา */
+.input-wrapper-modal { position: relative; margin-bottom: 16px; }
+.input-wrapper-modal input { width: 100%; padding: 12px 40px 12px 16px; border: 1px solid var(--border); border-radius: 10px; font-family: 'Sarabun', sans-serif; outline: none; transition: 0.2s; font-size: 1rem; }
+.input-wrapper-modal input:focus { border-color: var(--primary); }
+.toggle-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; opacity: 0.4; transition: 0.2s; padding: 5px; display: flex; }
+.toggle-btn:hover { opacity: 1; }
+.toggle-btn svg { width: 18px; height: 18px; fill: var(--text-dim); }
 </style>
 <script>
-// --- AUTH BLOCK ---
 (function(){
   var allowed=false;
   try{
@@ -148,14 +145,7 @@ body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--b
     window.__AUTH_BLOCKED__=true;
     document.addEventListener('DOMContentLoaded',function(){
       document.getElementById('root').innerHTML=
-        '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f3f5f9;font-family:\'Noto Sans Thai\',sans-serif">'+
-        '<div style="background:#fff;border-radius:24px;padding:48px 40px;text-align:center;max-width:440px;width:90%;box-shadow:0 25px 60px rgba(0,0,0,0.05); border-top: 5px solid #ef4444;">'+
-        '<div style="font-size: 48px; margin-bottom: 12px;">🔒</div>'+
-        '<h1 style="font-size:28px;font-weight:900;margin-bottom:12px;background:linear-gradient(135deg, #ef4444, #991b1b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;">Access Denied</h1>'+
-        '<p style="color:#475569;font-size:15px;line-height:1.6;margin-bottom:28px;font-weight:500;">หากท่านเป็นผู้ปฏิบัติงาน "หน่วยสื่อสารองค์กร"<br>กรุณาเข้าสู่ระบบก่อนใช้งาน</p>'+
-        '<a href="index.html" style="display:inline-block;padding:12px 36px;border-radius:12px;background:linear-gradient(135deg, #7c3aed, #2563eb);color:#fff;text-decoration:none;font-weight:700;font-size:15px;box-shadow:0 8px 20px rgba(124,58,237,0.25); transition:transform 0.2s;">เข้าสู่ระบบ</a>'+
-        '<span style="display:block;margin-top:24px;font-size:12px;color:#94a3b8;">โปรดติดต่อ เธียรวิชญ์ หากท่านมีปัญหาในการลงชื่อเข้าใช้</span>'+
-        '</div></div>';
+        '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f3f5f9;font-family:\'Noto Sans Thai\',sans-serif"><div style="background:#fff;border-radius:24px;padding:48px 40px;text-align:center;max-width:440px;width:90%;box-shadow:0 25px 60px rgba(0,0,0,0.05); border-top: 5px solid #ef4444;"><div style="font-size: 48px; margin-bottom: 12px;">🔒</div><h1 style="font-size:28px;font-weight:900;margin-bottom:12px;background:linear-gradient(135deg, #ef4444, #991b1b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;">Access Denied</h1><p style="color:#475569;font-size:15px;line-height:1.6;margin-bottom:28px;font-weight:500;">หากท่านเป็นผู้ปฏิบัติงาน "หน่วยสื่อสารองค์กร"<br>กรุณาเข้าสู่ระบบก่อนใช้งาน</p><a href="index.html" style="display:inline-block;padding:12px 36px;border-radius:12px;background:linear-gradient(135deg, #7c3aed, #2563eb);color:#fff;text-decoration:none;font-weight:700;font-size:15px;box-shadow:0 8px 20px rgba(124,58,237,0.25); transition:transform 0.2s;">เข้าสู่ระบบ</a></div></div>';
     });
   }
 })();
@@ -170,34 +160,9 @@ if(window.__AUTH_BLOCKED__) throw new Error('auth');
 const{useState,useEffect}=React;
 
 const STATIC_REPORT_DATA = {
-  // ข้อมูลปี 2568 (ตัวอย่างของเดิมที่ให้มา)
   2568: [
-    {
-      month: "มกราคม",
-      theme: "internal", 
-      icon: "👥",
-      badge: "สถานะ: ข้อมูลสมบูรณ์",
-      title: "รายงานสรุปผลการดำเนินงานของหน่วยสื่อสารองค์กร เดือนมกราคม 2568",
-      desc: "รายงานที่จัดทำขึ้นประกอบไปด้วยการวัดวิเคราะห์ผลผ่านระบบ Social ต่างๆของหน่วยสื่อสารองค์กรและวิเคราะห์ผลรวมจากเว็บไซต์สำนักหอสมุด จัดทำเป็นกราฟรายงานแบ่งเป็นหัวข้อย่อย ๆ",
-      stats: [
-        { val: "100", label: "ความสมบูรณ์ของเนื้อหา" },
-      ],
-      link: "Report/SEO MAR26.html"
-    },
-    {
-      month: "กุมภาพันธ์",
-      theme: "external", 
-      icon: "📖",
-      badge: "ผู้ใช้บริการภายนอก",
-      title: "สรุปผลการประเมินการเปิดรับข่าวสารและภาพลักษณ์ของผู้ใช้บริการ",
-      desc: "ผลสำรวจความคิดเห็นของผู้ใช้บริการต่อการสื่อสารภายนอกองค์กร ครอบคลุมช่องทาง เนื้อหา ความพึงพอใจ ภาพลักษณ์ และ Keyword",
-      stats: [
-        { val: "411", label: "ผู้ตอบ (คน)" },
-        { val: "4.28", label: "ความพึงพอใจเนื้อหา" },
-        { val: "4.47", label: "ภาพลักษณ์องค์กร" }
-      ],
-      link: "report-feb-2568.html"
-    },
+    { month: "มกราคม", theme: "internal", icon: "👥", badge: "สถานะ: ข้อมูลสมบูรณ์", title: "รายงานสรุปผลการดำเนินงานของหน่วยสื่อสารองค์กร เดือนมกราคม 2568", desc: "รายงานที่จัดทำขึ้นประกอบไปด้วยการวัดวิเคราะห์ผลผ่านระบบ Social ต่างๆของหน่วยสื่อสารองค์กรและวิเคราะห์ผลรวมจากเว็บไซต์สำนักหอสมุด จัดทำเป็นกราฟรายงานแบ่งเป็นหัวข้อย่อย ๆ", stats: [{ val: "100", label: "ความสมบูรณ์ของเนื้อหา" }], link: "Report/SEO MAR26.html" },
+    { month: "กุมภาพันธ์", theme: "external", icon: "📖", badge: "ผู้ใช้บริการภายนอก", title: "สรุปผลการประเมินการเปิดรับข่าวสารและภาพลักษณ์ของผู้ใช้บริการ", desc: "ผลสำรวจความคิดเห็นของผู้ใช้บริการต่อการสื่อสารภายนอกองค์กร ครอบคลุมช่องทาง เนื้อหา ความพึงพอใจ ภาพลักษณ์ และ Keyword", stats: [{ val: "411", label: "ผู้ตอบ (คน)" },{ val: "4.28", label: "ความพึงพอใจเนื้อหา" },{ val: "4.47", label: "ภาพลักษณ์องค์กร" }], link: "report-feb-2568.html" },
     { month: "มีนาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนมีนาคม", title: "รอข้อมูลรายงานเดือนมีนาคม 2568", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
     { month: "เมษายน", theme: "empty", icon: "📁", badge: "ประจำเดือนเมษายน", title: "รอข้อมูลรายงานเดือนเมษายน 2568", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
     { month: "พฤษภาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนพฤษภาคม", title: "รอข้อมูลรายงานเดือนพฤษภาคม 2568", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
@@ -209,7 +174,6 @@ const STATIC_REPORT_DATA = {
     { month: "พฤศจิกายน", theme: "empty", icon: "📁", badge: "ประจำเดือนพฤศจิกายน", title: "รอข้อมูลรายงานเดือนพฤศจิกายน 2568", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
     { month: "ธันวาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนธันวาคม", title: "รอข้อมูลรายงานเดือนธันวาคม 2568", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" }
   ],
-  // ให้จำลองเดือนอื่นๆ ของปีอื่นๆ เป็น Empty อัตโนมัติในส่วนของหน้าบ้าน
   2569: Array.from({length: 12}, (_, i) => ({ month: ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i], theme: "empty", icon: "📁", badge: `ประจำเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]}`, title: `รอข้อมูลรายงานเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]} 2569`, desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" })),
   2570: Array.from({length: 12}, (_, i) => ({ month: ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i], theme: "empty", icon: "📁", badge: `ประจำเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]}`, title: `รอข้อมูลรายงานเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]} 2570`, desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" })),
   2571: Array.from({length: 12}, (_, i) => ({ month: ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i], theme: "empty", icon: "📁", badge: `ประจำเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]}`, title: `รอข้อมูลรายงานเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]} 2571`, desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" })),
@@ -219,18 +183,26 @@ const YEARS = [2568, 2569, 2570, 2571, 2572];
 
 function getUser(){try{return JSON.parse(localStorage.getItem('cc_pr_user'));}catch(e){return null;}}
 
+const IconEyeOpen = <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>;
+const IconEyeClosed = <svg viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>;
+
 function Dashboard(){
   const [selectedYear, setSelectedYear] = useState(2568);
   const user = getUser();
   const [isNavigating, setIsNavigating] = useState(false);
   
-  // State สำหรับ Modal เปลี่ยนรหัสผ่าน
+  // State Modal
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [oldPass, setOldPass] = useState('');
   const [newPass, setNewPass] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
   const [loadingPass, setLoadingPass] = useState(false);
   const [msg, setMsg] = useState({ type: '', text: '' });
+
+  // State Toggle ตา
+  const [showOld, setShowOld] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbgS1p5LXE3U7zlq1NdZithqP6pN9X7GcJIkOz9jFYnKP7xZBAbrq2xDeXtnw6w2pE/exec";
 
@@ -258,8 +230,7 @@ function Dashboard(){
 
   const handleLogout=()=>{localStorage.removeItem("cc_pr_user");localStorage.removeItem("cc_pr_lastActivity");window.location.href="index.html";};
 
-const handleChangePassword = async () => {
-    // ตัดช่องว่างหน้า-หลัง เผื่อผู้ใช้เผลอกด Spacebar
+  const handleChangePassword = async () => {
     const safeOldPass = oldPass.trim();
     const safeNewPass = newPass.trim();
     const safeConfirmPass = confirmPass.trim();
@@ -298,12 +269,14 @@ const handleChangePassword = async () => {
         setTimeout(() => {
           setIsSettingsOpen(false);
           setOldPass(''); setNewPass(''); setConfirmPass(''); setMsg({ type: '', text: '' });
+          setShowOld(false); setShowNew(false); setShowConfirm(false);
         }, 2000);
       } else {
         setMsg({ type: 'error', text: result.message || 'รหัสผ่านเดิมไม่ถูกต้อง' });
       }
     } catch (error) {
-      setMsg({ type: 'error', text: 'ไม่สามารถเชื่อมต่อระบบได้ในขณะนี้' });
+      console.error("Fetch Error:", error);
+      setMsg({ type: 'error', text: 'บันทึกไม่ได้: โปรดตรวจสอบการ Deploy ใน Apps Script' });
     }
     setLoadingPass(false);
   };
@@ -325,7 +298,6 @@ const handleChangePassword = async () => {
               <div style={{fontSize: "11px", color: "var(--text-dim)"}}>{user.roleLabel}</div>
             </div>
           )}
-          {/* ปุ่มฟันเฟืองสำหรับเปลี่ยนรหัสผ่าน */}
           <button className="btn-icon" onClick={() => setIsSettingsOpen(true)} title="ตั้งค่าบัญชี">⚙️</button>
           <button className="btn-logout" onClick={handleLogout}>ออกจากระบบ</button>
         </div>
@@ -337,9 +309,7 @@ const handleChangePassword = async () => {
 
         <div className="year-selector">
           {YEARS.map(y=>(
-            <button key={y} className={`btn-year ${selectedYear===y?'active':''}`} onClick={()=>setSelectedYear(y)}>
-              ปี {y}
-            </button>
+            <button key={y} className={`btn-year ${selectedYear===y?'active':''}`} onClick={()=>setSelectedYear(y)}>ปี {y}</button>
           ))}
         </div>
       </section>
@@ -360,10 +330,7 @@ const handleChangePassword = async () => {
                 {!isEmpty && data.stats && (
                   <div className="c-stats-row">
                     {data.stats.map((stat, i) => (
-                      <div className="c-stat-col" key={i}>
-                        <div className="c-stat-val">{stat.val}</div>
-                        <div className="c-stat-label">{stat.label}</div>
-                      </div>
+                      <div className="c-stat-col" key={i}><div className="c-stat-val">{stat.val}</div><div className="c-stat-label">{stat.label}</div></div>
                     ))}
                   </div>
                 )}
@@ -383,14 +350,11 @@ const handleChangePassword = async () => {
         Developed by Thianrawich and Mod-Ngarm Team | Copyright &copy; 2026
       </footer>
 
-      {/* หน้าจอ Loading Overlay */}
       <div className={`loading-overlay ${isNavigating ? 'active' : ''}`}>
         <div className="graph-loader">
           <div className="graph-bar"></div><div className="graph-bar"></div><div className="graph-bar"></div><div className="graph-bar"></div><div className="graph-bar"></div>
         </div>
-        <div className="loading-text">
-          กำลังโหลดรายงานจากระบบคลังจัดเก็บเอกสาร<br /><span className="loading-subtext">หน่วยสื่อสารองค์กร</span>
-        </div>
+        <div className="loading-text">กำลังโหลดรายงานจากระบบคลังจัดเก็บเอกสาร<br /><span className="loading-subtext">หน่วยสื่อสารองค์กร</span></div>
       </div>
 
       {/* Modal เปลี่ยนรหัสผ่าน */}
@@ -400,16 +364,26 @@ const handleChangePassword = async () => {
           
           {msg.text && <div className={`msg-alert ${msg.type}`}>{msg.text}</div>}
 
-          <input type="password" placeholder="รหัสผ่านเดิม" className="modal-input" 
-                 value={oldPass} onChange={(e) => setOldPass(e.target.value)} />
-          <input type="password" placeholder="รหัสผ่านใหม่" className="modal-input" 
-                 value={newPass} onChange={(e) => setNewPass(e.target.value)} />
-          <input type="password" placeholder="ยืนยันรหัสผ่านใหม่" className="modal-input" 
-                 value={confirmPass} onChange={(e) => setConfirmPass(e.target.value)} />
+          <div className="input-wrapper-modal">
+            <input type={showOld ? "text" : "password"} placeholder="รหัสผ่านเดิม" value={oldPass} onChange={(e) => setOldPass(e.target.value)} />
+            <button type="button" className="toggle-btn" onClick={() => setShowOld(!showOld)}>{showOld ? IconEyeOpen : IconEyeClosed}</button>
+          </div>
+
+          <div className="input-wrapper-modal">
+            <input type={showNew ? "text" : "password"} placeholder="รหัสผ่านใหม่" value={newPass} onChange={(e) => setNewPass(e.target.value)} />
+            <button type="button" className="toggle-btn" onClick={() => setShowNew(!showNew)}>{showNew ? IconEyeOpen : IconEyeClosed}</button>
+          </div>
+
+          <div className="input-wrapper-modal">
+            <input type={showConfirm ? "text" : "password"} placeholder="ยืนยันรหัสผ่านใหม่" value={confirmPass} onChange={(e) => setConfirmPass(e.target.value)} />
+            <button type="button" className="toggle-btn" onClick={() => setShowConfirm(!showConfirm)}>{showConfirm ? IconEyeOpen : IconEyeClosed}</button>
+          </div>
                  
           <div className="modal-actions">
             <button className="btn-cancel" onClick={() => { 
-                setIsSettingsOpen(false); setMsg({type:'', text:''}); setOldPass(''); setNewPass(''); setConfirmPass(''); 
+                setIsSettingsOpen(false); setMsg({type:'', text:''}); 
+                setOldPass(''); setNewPass(''); setConfirmPass(''); 
+                setShowOld(false); setShowNew(false); setShowConfirm(false);
             }}>ยกเลิก</button>
             <button className="btn-save" onClick={handleChangePassword} disabled={loadingPass}>
               {loadingPass ? "กำลังบันทึก..." : "บันทึกรหัสผ่าน"}
