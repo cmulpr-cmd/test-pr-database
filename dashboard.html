@@ -427,14 +427,8 @@ function Dashboard(){
                   </div>
                 )}
 
-                {!isEmpty ? (
-                {!isEmpty ? (
+               {!isEmpty ? (
                   <a href={data.link} onClick={(e) => handleNavigate(e, data.link)} className="c-btn">
-                    ดูรายงานฉบับเต็ม &rarr;
-                  </a>
-                ) : (
-                  <button className="c-btn c-btn-empty" disabled>ยังไม่มีข้อมูล</button>
-                )}
                     ดูรายงานฉบับเต็ม &rarr;
                   </a>
                 ) : (
@@ -446,15 +440,12 @@ function Dashboard(){
         </div>
       </section>
       
-<footer style={{ textAlign: "center", padding: "30px", fontSize: "12px", color: "var(--text-muted)" }}>
-        หน่วยสื่อสารองค์กร สำนักหอสมุด มหาวิทยาลัยเชียงใหม่ &middot; PR CMUL Dashboard <br />
-        Developed by Thianrawich and Mod-Ngarm Team | Copyright &copy; 2026
-<footer style={{ textAlign: "center", padding: "30px", fontSize: "12px", color: "var(--text-muted)" }}>
+      <footer style={{ textAlign: "center", padding: "30px", fontSize: "12px", color: "var(--text-muted)" }}>
         หน่วยสื่อสารองค์กร สำนักหอสมุด มหาวิทยาลัยเชียงใหม่ &middot; PR CMUL Dashboard <br />
         Developed by Thianrawich and Mod-Ngarm Team | Copyright &copy; 2026
       </footer>
 
-      {/* หน้าจอ Loading Overlay (วางตรงนี้เลยครับ) */}
+      {/* หน้าจอ Loading Overlay */}
       <div className={`loading-overlay ${isNavigating ? 'active' : ''}`}>
         <div className="graph-loader">
           <div className="graph-bar"></div>
@@ -469,10 +460,6 @@ function Dashboard(){
         </div>
       </div>
 
-    </div>
-  );
-}     
-</footer>
     </div>
   );
 }
