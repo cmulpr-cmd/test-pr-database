@@ -42,6 +42,10 @@ body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--b
 .btn-logout { padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; border:none; background: rgba(239,68,68,0.1); color: #ef4444; font-family: 'Noto Sans Thai', sans-serif; transition: 0.2s; }
 .btn-logout:hover { background: rgba(239,68,68,0.15); }
 
+/* ปุ่มตั้งค่า (เฟือง) */
+.btn-icon { background: none; border: none; font-size: 20px; cursor: pointer; padding: 8px; border-radius: 50%; transition: 0.2s; display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
+.btn-icon:hover { background: rgba(0,0,0,0.05); color: var(--text); }
+
 /* Hero & Year Selector */
 .hero { padding: 40px 40px 20px; text-align: center; }
 .hero h1 { font-family: 'Noto Sans Thai', sans-serif; font-size: 32px; font-weight: 900; color: var(--text); margin-bottom: 10px; }
@@ -53,30 +57,24 @@ body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--b
 .cards-section { flex: 1; padding: 20px 40px 80px; max-width: 1200px; margin: 0 auto; width: 100%; }
 .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 30px; }
 
-/* Custom Report Card (Match exactly with User's Image) */
-.custom-card {
-  background: var(--surface); border-radius: 20px; padding: 35px 30px;
-  position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-  transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column;
-}
+/* Custom Report Card */
+.custom-card { background: var(--surface); border-radius: 20px; padding: 35px 30px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
 .custom-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.08); }
 .card-top-line { position: absolute; top: 0; left: 0; right: 0; height: 6px; }
 
-/* Theme: Internal (Green/Blue) */
+/* Themes */
 .theme-internal .card-top-line { background: linear-gradient(90deg, #10b981, #0ea5e9); }
 .theme-internal .c-icon-box { background: #ecfdf5; color: #0f766e; }
 .theme-internal .c-badge { background: #d1fae5; color: #047857; }
 .theme-internal .c-stat-val { color: #0284c7; }
 .theme-internal .c-btn { background: linear-gradient(90deg, #10b981, #0ea5e9); }
 
-/* Theme: External (Pink/Purple) */
 .theme-external .card-top-line { background: linear-gradient(90deg, #ec4899, #8b5cf6); }
 .theme-external .c-icon-box { background: #fdf2f8; color: #be185d; }
 .theme-external .c-badge { background: #fce7f3; color: #be185d; }
 .theme-external .c-stat-val { color: #7c3aed; }
 .theme-external .c-btn { background: linear-gradient(90deg, #d946ef, #8b5cf6); }
 
-/* Theme: Empty (Gray) */
 .theme-empty .card-top-line { background: #e2e8f0; }
 .theme-empty .c-icon-box { background: #f1f5f9; color: #94a3b8; }
 .theme-empty .c-badge { background: #f1f5f9; color: #64748b; }
@@ -92,80 +90,44 @@ body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--b
 .c-stat-val { font-size: 24px; font-weight: 800; font-family: 'Noto Sans Thai'; margin-bottom: 4px; letter-spacing: -0.5px; }
 .c-stat-label { font-size: 11px; color: var(--text-muted); font-weight: 600; }
 
-.c-btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 12px 24px; border-radius: 12px; color: #fff; text-decoration: none;
-  font-family: 'Noto Sans Thai'; font-size: 14px; font-weight: 700;
-  margin-top: 24px; width: fit-content; transition: opacity 0.3s; border: none; cursor:pointer;
-}
+.c-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 12px; color: #fff; text-decoration: none; font-family: 'Noto Sans Thai'; font-size: 14px; font-weight: 700; margin-top: 24px; width: fit-content; transition: opacity 0.3s; border: none; cursor:pointer; }
 .c-btn:hover { opacity: 0.9; }
 .c-btn-empty { background: #e2e8f0; color: #64748b; cursor: not-allowed; }
 
 @media (max-width: 768px) { .cards-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 24px; } }
-/* =========================================
-   หน้าจอโหลดดิ้ง (Loading Overlay)
-   ========================================= */
-.loading-overlay {
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-  backdrop-filter: blur(8px);
-}
-.loading-overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
 
-/* อนิเมชันกราฟคลื่น (Graph Wave) */
-.graph-loader {
-  display: flex;
-  align-items: flex-end;
-  gap: 6px;
-  height: 50px;
-  margin-bottom: 24px;
-}
-.graph-bar {
-  width: 10px;
-  height: 50px;
-  background: linear-gradient(to top, #2563eb, #0ea5e9);
-  border-radius: 6px;
-  animation: graph-wave 1.2s ease-in-out infinite;
-  transform-origin: bottom;
-}
+/* Loading Overlay */
+.loading-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; backdrop-filter: blur(8px); }
+.loading-overlay.active { opacity: 1; pointer-events: auto; }
+.graph-loader { display: flex; align-items: flex-end; gap: 6px; height: 50px; margin-bottom: 24px; }
+.graph-bar { width: 10px; height: 50px; background: linear-gradient(to top, #2563eb, #0ea5e9); border-radius: 6px; animation: graph-wave 1.2s ease-in-out infinite; transform-origin: bottom; }
 .graph-bar:nth-child(1) { animation-delay: 0.0s; height: 30%; }
 .graph-bar:nth-child(2) { animation-delay: 0.1s; height: 70%; }
 .graph-bar:nth-child(3) { animation-delay: 0.2s; height: 100%; }
 .graph-bar:nth-child(4) { animation-delay: 0.3s; height: 50%; }
 .graph-bar:nth-child(5) { animation-delay: 0.4s; height: 80%; }
+@keyframes graph-wave { 0%, 100% { transform: scaleY(0.4); opacity: 0.5; } 50% { transform: scaleY(1); opacity: 1; } }
+.loading-text { text-align: center; color: var(--text); font-size: 18px; font-weight: 700; line-height: 1.6; }
+.loading-subtext { color: var(--text-muted); font-size: 14px; font-weight: 500; }
 
-@keyframes graph-wave {
-  0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
-  50% { transform: scaleY(1); opacity: 1; }
-}
-
-.loading-text {
-  text-align: center;
-  color: var(--text);
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.6;
-}
-.loading-subtext {
-  color: var(--text-muted);
-  font-size: 14px;
-  font-weight: 500;
-}
+/* Modal เปลี่ยนรหัสผ่าน */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal-card { background: #fff; width: 90%; max-width: 400px; border-radius: 20px; padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); transform: translateY(20px); transition: 0.3s; }
+.modal-overlay.active .modal-card { transform: translateY(0); }
+.modal-title { font-size: 20px; font-weight: 800; margin-bottom: 20px; color: var(--text); }
+.modal-input { width: 100%; padding: 12px 16px; margin-bottom: 16px; border: 1px solid var(--border); border-radius: 10px; font-family: 'Sarabun', sans-serif; outline: none; transition: 0.2s; }
+.modal-input:focus { border-color: var(--primary); }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
+.btn-cancel { padding: 10px 16px; border: none; background: #f1f5f9; color: #64748b; border-radius: 10px; cursor: pointer; font-weight: 600; font-family: 'Noto Sans Thai'; }
+.btn-save { padding: 10px 16px; border: none; background: linear-gradient(135deg, #7c3aed, #2563eb); color: #fff; border-radius: 10px; cursor: pointer; font-weight: 600; font-family: 'Noto Sans Thai'; }
+.btn-save:disabled { opacity: 0.7; cursor: not-allowed; }
+.msg-alert { font-size: 13px; margin-bottom: 15px; padding: 10px; border-radius: 8px; display: none; text-align: center;}
+.msg-alert.error { background: #fef2f2; color: #dc2626; display: block; }
+.msg-alert.success { background: #ecfdf5; color: #059669; display: block; }
 </style>
 <script>
-// --- AUTH BLOCK (รักษาความปลอดภัยเหมือนเดิม) ---
+// --- AUTH BLOCK ---
 (function(){
   var allowed=false;
   try{
@@ -207,14 +169,8 @@ body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--b
 if(window.__AUTH_BLOCKED__) throw new Error('auth');
 const{useState,useEffect}=React;
 
-// =========================================================================
-// ✏️ ฐานข้อมูลแบบสร้างเอง (กางโครงสร้างรอไว้ถึงปี 2572 แบบเต็มทุกเดือน)
-// =========================================================================
-
 const STATIC_REPORT_DATA = {
-  // -------------------------------------------------------------------------
-  // 📅 ข้อมูลปี 2568
-  // -------------------------------------------------------------------------
+  // ข้อมูลปี 2568 (ตัวอย่างของเดิมที่ให้มา)
   2568: [
     {
       month: "มกราคม",
@@ -253,100 +209,35 @@ const STATIC_REPORT_DATA = {
     { month: "พฤศจิกายน", theme: "empty", icon: "📁", badge: "ประจำเดือนพฤศจิกายน", title: "รอข้อมูลรายงานเดือนพฤศจิกายน 2568", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
     { month: "ธันวาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนธันวาคม", title: "รอข้อมูลรายงานเดือนธันวาคม 2568", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" }
   ],
-
-  // -------------------------------------------------------------------------
-  // 📅 ข้อมูลปี 2569
-  // -------------------------------------------------------------------------
-  2569: [
-    { month: "มกราคม", theme: "empty", icon: "📁", badge: "ประจำเดือนมกราคม", title: "รอข้อมูลรายงานเดือนมกราคม 2569", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "กุมภาพันธ์", theme: "empty", icon: "📁", badge: "ประจำเดือนกุมภาพันธ์", title: "รอข้อมูลรายงานเดือนกุมภาพันธ์ 2569", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "มีนาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนมีนาคม", title: "รอข้อมูลรายงานเดือนมีนาคม 2569", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "เมษายน", theme: "empty", icon: "📁", badge: "ประจำเดือนเมษายน", title: "รอข้อมูลรายงานเดือนเมษายน 2569", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "พฤษภาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนพฤษภาคม", title: "รอข้อมูลรายงานเดือนพฤษภาคม 2569", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "มิถุนายน", theme: "empty", icon: "📁", badge: "ประจำเดือนมิถุนายน", title: "รอข้อมูลรายงานเดือนมิถุนายน 2569", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "กรกฎาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนกรกฎาคม", title: "รอข้อมูลรายงานเดือนกรกฎาคม 2569", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "สิงหาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนสิงหาคม", title: "รอข้อมูลรายงานเดือนสิงหาคม 2569", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "กันยายน", theme: "empty", icon: "📁", badge: "ประจำเดือนกันยายน", title: "รอข้อมูลรายงานเดือนกันยายน 2569", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "ตุลาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนตุลาคม", title: "รอข้อมูลรายงานเดือนตุลาคม 2569", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "พฤศจิกายน", theme: "empty", icon: "📁", badge: "ประจำเดือนพฤศจิกายน", title: "รอข้อมูลรายงานเดือนพฤศจิกายน 2569", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "ธันวาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนธันวาคม", title: "รอข้อมูลรายงานเดือนธันวาคม 2569", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" }
-  ],
-
-  // -------------------------------------------------------------------------
-  // 📅 ข้อมูลปี 2570
-  // -------------------------------------------------------------------------
-  2570: [
-    { month: "มกราคม", theme: "empty", icon: "📁", badge: "ประจำเดือนมกราคม", title: "รอข้อมูลรายงานเดือนมกราคม 2570", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "กุมภาพันธ์", theme: "empty", icon: "📁", badge: "ประจำเดือนกุมภาพันธ์", title: "รอข้อมูลรายงานเดือนกุมภาพันธ์ 2570", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "มีนาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนมีนาคม", title: "รอข้อมูลรายงานเดือนมีนาคม 2570", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "เมษายน", theme: "empty", icon: "📁", badge: "ประจำเดือนเมษายน", title: "รอข้อมูลรายงานเดือนเมษายน 2570", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "พฤษภาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนพฤษภาคม", title: "รอข้อมูลรายงานเดือนพฤษภาคม 2570", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "มิถุนายน", theme: "empty", icon: "📁", badge: "ประจำเดือนมิถุนายน", title: "รอข้อมูลรายงานเดือนมิถุนายน 2570", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "กรกฎาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนกรกฎาคม", title: "รอข้อมูลรายงานเดือนกรกฎาคม 2570", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "สิงหาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนสิงหาคม", title: "รอข้อมูลรายงานเดือนสิงหาคม 2570", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "กันยายน", theme: "empty", icon: "📁", badge: "ประจำเดือนกันยายน", title: "รอข้อมูลรายงานเดือนกันยายน 2570", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "ตุลาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนตุลาคม", title: "รอข้อมูลรายงานเดือนตุลาคม 2570", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "พฤศจิกายน", theme: "empty", icon: "📁", badge: "ประจำเดือนพฤศจิกายน", title: "รอข้อมูลรายงานเดือนพฤศจิกายน 2570", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "ธันวาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนธันวาคม", title: "รอข้อมูลรายงานเดือนธันวาคม 2570", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" }
-  ],
-
-  // -------------------------------------------------------------------------
-  // 📅 ข้อมูลปี 2571
-  // -------------------------------------------------------------------------
-  2571: [
-    { month: "มกราคม", theme: "empty", icon: "📁", badge: "ประจำเดือนมกราคม", title: "รอข้อมูลรายงานเดือนมกราคม 2571", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "กุมภาพันธ์", theme: "empty", icon: "📁", badge: "ประจำเดือนกุมภาพันธ์", title: "รอข้อมูลรายงานเดือนกุมภาพันธ์ 2571", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "มีนาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนมีนาคม", title: "รอข้อมูลรายงานเดือนมีนาคม 2571", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "เมษายน", theme: "empty", icon: "📁", badge: "ประจำเดือนเมษายน", title: "รอข้อมูลรายงานเดือนเมษายน 2571", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "พฤษภาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนพฤษภาคม", title: "รอข้อมูลรายงานเดือนพฤษภาคม 2571", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "มิถุนายน", theme: "empty", icon: "📁", badge: "ประจำเดือนมิถุนายน", title: "รอข้อมูลรายงานเดือนมิถุนายน 2571", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "กรกฎาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนกรกฎาคม", title: "รอข้อมูลรายงานเดือนกรกฎาคม 2571", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "สิงหาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนสิงหาคม", title: "รอข้อมูลรายงานเดือนสิงหาคม 2571", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "กันยายน", theme: "empty", icon: "📁", badge: "ประจำเดือนกันยายน", title: "รอข้อมูลรายงานเดือนกันยายน 2571", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "ตุลาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนตุลาคม", title: "รอข้อมูลรายงานเดือนตุลาคม 2571", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "พฤศจิกายน", theme: "empty", icon: "📁", badge: "ประจำเดือนพฤศจิกายน", title: "รอข้อมูลรายงานเดือนพฤศจิกายน 2571", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "ธันวาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนธันวาคม", title: "รอข้อมูลรายงานเดือนธันวาคม 2571", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" }
-  ],
-
-  // -------------------------------------------------------------------------
-  // 📅 ข้อมูลปี 2572
-  // -------------------------------------------------------------------------
-  2572: [
-    { month: "มกราคม", theme: "empty", icon: "📁", badge: "ประจำเดือนมกราคม", title: "รอข้อมูลรายงานเดือนมกราคม 2572", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "กุมภาพันธ์", theme: "empty", icon: "📁", badge: "ประจำเดือนกุมภาพันธ์", title: "รอข้อมูลรายงานเดือนกุมภาพันธ์ 2572", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "มีนาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนมีนาคม", title: "รอข้อมูลรายงานเดือนมีนาคม 2572", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "เมษายน", theme: "empty", icon: "📁", badge: "ประจำเดือนเมษายน", title: "รอข้อมูลรายงานเดือนเมษายน 2572", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "พฤษภาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนพฤษภาคม", title: "รอข้อมูลรายงานเดือนพฤษภาคม 2572", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "มิถุนายน", theme: "empty", icon: "📁", badge: "ประจำเดือนมิถุนายน", title: "รอข้อมูลรายงานเดือนมิถุนายน 2572", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "กรกฎาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนกรกฎาคม", title: "รอข้อมูลรายงานเดือนกรกฎาคม 2572", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "สิงหาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนสิงหาคม", title: "รอข้อมูลรายงานเดือนสิงหาคม 2572", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "กันยายน", theme: "empty", icon: "📁", badge: "ประจำเดือนกันยายน", title: "รอข้อมูลรายงานเดือนกันยายน 2572", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "ตุลาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนตุลาคม", title: "รอข้อมูลรายงานเดือนตุลาคม 2572", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "พฤศจิกายน", theme: "empty", icon: "📁", badge: "ประจำเดือนพฤศจิกายน", title: "รอข้อมูลรายงานเดือนพฤศจิกายน 2572", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" },
-    { month: "ธันวาคม", theme: "empty", icon: "📁", badge: "ประจำเดือนธันวาคม", title: "รอข้อมูลรายงานเดือนธันวาคม 2572", desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" }
-  ]
+  // ให้จำลองเดือนอื่นๆ ของปีอื่นๆ เป็น Empty อัตโนมัติในส่วนของหน้าบ้าน
+  2569: Array.from({length: 12}, (_, i) => ({ month: ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i], theme: "empty", icon: "📁", badge: `ประจำเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]}`, title: `รอข้อมูลรายงานเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]} 2569`, desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" })),
+  2570: Array.from({length: 12}, (_, i) => ({ month: ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i], theme: "empty", icon: "📁", badge: `ประจำเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]}`, title: `รอข้อมูลรายงานเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]} 2570`, desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" })),
+  2571: Array.from({length: 12}, (_, i) => ({ month: ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i], theme: "empty", icon: "📁", badge: `ประจำเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]}`, title: `รอข้อมูลรายงานเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]} 2571`, desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" })),
+  2572: Array.from({length: 12}, (_, i) => ({ month: ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i], theme: "empty", icon: "📁", badge: `ประจำเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]}`, title: `รอข้อมูลรายงานเดือน${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][i]} 2572`, desc: "ยังไม่มีการนำเข้าข้อมูลรายงานผลประจำเดือนนี้", stats: [ { val: "0", label: "ผู้ตอบ (คน)" }, { val: "0.00", label: "ความพึงพอใจรวม" }, { val: "0%", label: "ข้อเสนอแนะ" } ], link: "" }))
 };
-
 const YEARS = [2568, 2569, 2570, 2571, 2572];
-// =========================================================================
 
 function getUser(){try{return JSON.parse(localStorage.getItem('cc_pr_user'));}catch(e){return null;}}
 
 function Dashboard(){
-  const[selectedYear,setSelectedYear]=useState(2568);
-  const user=getUser();
-// 1. เพิ่มตัวแปรเช็คสถานะการโหลด
+  const [selectedYear, setSelectedYear] = useState(2568);
+  const user = getUser();
   const [isNavigating, setIsNavigating] = useState(false);
+  
+  // State สำหรับ Modal เปลี่ยนรหัสผ่าน
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [oldPass, setOldPass] = useState('');
+  const [newPass, setNewPass] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
+  const [loadingPass, setLoadingPass] = useState(false);
+  const [msg, setMsg] = useState({ type: '', text: '' });
 
-  // 2. ฟังก์ชันหน่วงเวลาก่อนเปิดหน้าใหม่
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbgS1p5LXE3U7zlq1NdZithqP6pN9X7GcJIkOz9jFYnKP7xZBAbrq2xDeXtnw6w2pE/exec";
+
   const handleNavigate = (e, link) => {
-    e.preventDefault(); // หยุดไม่ให้ลิงก์ทำงานทันที
-    setIsNavigating(true); // เปิดหน้าจอโหลดดิ้ง
-    
-    // ตั้งเวลา 1.5 วินาที (1500 ms) แล้วค่อยพาไปหน้าใหม่
-    setTimeout(() => {
-      window.location.href = link;
-    }, 1500); 
+    e.preventDefault();
+    setIsNavigating(true);
+    setTimeout(() => { window.location.href = link; }, 1500); 
   };
   
   useEffect(()=>{
@@ -367,14 +258,58 @@ function Dashboard(){
 
   const handleLogout=()=>{localStorage.removeItem("cc_pr_user");localStorage.removeItem("cc_pr_lastActivity");window.location.href="index.html";};
 
-  // ดึงข้อมูลของปีที่เลือกมาแสดง
-  const currentYearData = STATIC_REPORT_DATA[selectedYear];
+  const handleChangePassword = async () => {
+    if (!oldPass || !newPass || !confirmPass) {
+        setMsg({ type: 'error', text: 'กรุณากรอกข้อมูลให้ครบถ้วน' });
+        return;
+    }
+    if (newPass !== confirmPass) {
+      setMsg({ type: 'error', text: 'รหัสผ่านใหม่ไม่ตรงกัน' });
+      return;
+    }
+    if (newPass.length < 6) {
+      setMsg({ type: 'error', text: 'รหัสผ่านใหม่ต้องมีอย่างน้อย 6 ตัวอักษร' });
+      return;
+    }
+
+    setLoadingPass(true);
+    setMsg({ type: '', text: '' });
+
+    try {
+      const response = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          action: 'changePassword',
+          username: user.username,
+          oldPassword: oldPass,
+          newPassword: newPass
+        })
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setMsg({ type: 'success', text: 'เปลี่ยนรหัสผ่านสำเร็จ!' });
+        setTimeout(() => {
+          setIsSettingsOpen(false);
+          setOldPass(''); setNewPass(''); setConfirmPass(''); setMsg({ type: '', text: '' });
+        }, 2000);
+      } else {
+        setMsg({ type: 'error', text: result.message || 'รหัสผ่านเดิมไม่ถูกต้อง' });
+      }
+    } catch (error) {
+      setMsg({ type: 'error', text: 'ไม่สามารถเชื่อมต่อระบบได้ในขณะนี้' });
+    }
+    setLoadingPass(false);
+  };
+
+  const currentYearData = STATIC_REPORT_DATA[selectedYear] || STATIC_REPORT_DATA[2568];
 
   return(
     <div className="page">
       <header className="topbar" style={{animation: "fadeUp 0.5s"}}>
         <div className="topbar-brand">
-        <img src="logo web.png" alt="โลโก้" style={{ height: "50px", width: "auto", marginRight: "12px" }} />
+          <img src="logo web.png" alt="โลโก้" style={{ height: "50px", width: "auto", marginRight: "12px" }} />
           <div className="brand-text"><span>หน่วยสื่อสารองค์กร</span><br/>สำนักหอสมุด มหาวิทยาลัยเชียงใหม่</div>
         </div>
         
@@ -385,6 +320,8 @@ function Dashboard(){
               <div style={{fontSize: "11px", color: "var(--text-dim)"}}>{user.roleLabel}</div>
             </div>
           )}
+          {/* ปุ่มฟันเฟืองสำหรับเปลี่ยนรหัสผ่าน */}
+          <button className="btn-icon" onClick={() => setIsSettingsOpen(true)} title="ตั้งค่าบัญชี">⚙️</button>
           <button className="btn-logout" onClick={handleLogout}>ออกจากระบบ</button>
         </div>
       </header>
@@ -409,15 +346,12 @@ function Dashboard(){
             return (
               <div key={index} className={`custom-card theme-${data.theme}`} style={{animation: `fadeUp 0.5s ${0.2 + (index*0.05)}s both`}}>
                 <div className="card-top-line"></div>
-                
                 <div className="c-header">
                   <div className="c-icon-box">{data.icon || "📁"}</div>
                   <div className="c-badge">{data.badge || `ประจำเดือน${data.month}`}</div>
                 </div>
-
                 <div className="c-title">{data.title}</div>
                 <div className="c-desc">{data.desc}</div>
-
                 {!isEmpty && data.stats && (
                   <div className="c-stats-row">
                     {data.stats.map((stat, i) => (
@@ -428,11 +362,8 @@ function Dashboard(){
                     ))}
                   </div>
                 )}
-
                {!isEmpty ? (
-                  <a href={data.link} onClick={(e) => handleNavigate(e, data.link)} className="c-btn">
-                    ดูรายงานฉบับเต็ม &rarr;
-                  </a>
+                  <a href={data.link} onClick={(e) => handleNavigate(e, data.link)} className="c-btn">ดูรายงานฉบับเต็ม &rarr;</a>
                 ) : (
                   <button className="c-btn c-btn-empty" disabled>ยังไม่มีข้อมูล</button>
                 )}
@@ -450,15 +381,35 @@ function Dashboard(){
       {/* หน้าจอ Loading Overlay */}
       <div className={`loading-overlay ${isNavigating ? 'active' : ''}`}>
         <div className="graph-loader">
-          <div className="graph-bar"></div>
-          <div className="graph-bar"></div>
-          <div className="graph-bar"></div>
-          <div className="graph-bar"></div>
-          <div className="graph-bar"></div>
+          <div className="graph-bar"></div><div className="graph-bar"></div><div className="graph-bar"></div><div className="graph-bar"></div><div className="graph-bar"></div>
         </div>
         <div className="loading-text">
-          กำลังโหลดรายงานจากระบบคลังจัดเก็บเอกสาร<br />
-          <span className="loading-subtext">หน่วยสื่อสารองค์กร</span>
+          กำลังโหลดรายงานจากระบบคลังจัดเก็บเอกสาร<br /><span className="loading-subtext">หน่วยสื่อสารองค์กร</span>
+        </div>
+      </div>
+
+      {/* Modal เปลี่ยนรหัสผ่าน */}
+      <div className={`modal-overlay ${isSettingsOpen ? 'active' : ''}`}>
+        <div className="modal-card">
+          <h3 className="modal-title">เปลี่ยนรหัสผ่าน</h3>
+          
+          {msg.text && <div className={`msg-alert ${msg.type}`}>{msg.text}</div>}
+
+          <input type="password" placeholder="รหัสผ่านเดิม" className="modal-input" 
+                 value={oldPass} onChange={(e) => setOldPass(e.target.value)} />
+          <input type="password" placeholder="รหัสผ่านใหม่" className="modal-input" 
+                 value={newPass} onChange={(e) => setNewPass(e.target.value)} />
+          <input type="password" placeholder="ยืนยันรหัสผ่านใหม่" className="modal-input" 
+                 value={confirmPass} onChange={(e) => setConfirmPass(e.target.value)} />
+                 
+          <div className="modal-actions">
+            <button className="btn-cancel" onClick={() => { 
+                setIsSettingsOpen(false); setMsg({type:'', text:''}); setOldPass(''); setNewPass(''); setConfirmPass(''); 
+            }}>ยกเลิก</button>
+            <button className="btn-save" onClick={handleChangePassword} disabled={loadingPass}>
+              {loadingPass ? "กำลังบันทึก..." : "บันทึกรหัสผ่าน"}
+            </button>
+          </div>
         </div>
       </div>
 
