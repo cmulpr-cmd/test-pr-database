@@ -428,7 +428,13 @@ function Dashboard(){
                 )}
 
                 {!isEmpty ? (
-                  <a href={data.link} className="c-btn">
+                {!isEmpty ? (
+                  <a href={data.link} onClick={(e) => handleNavigate(e, data.link)} className="c-btn">
+                    ดูรายงานฉบับเต็ม &rarr;
+                  </a>
+                ) : (
+                  <button className="c-btn c-btn-empty" disabled>ยังไม่มีข้อมูล</button>
+                )}
                     ดูรายงานฉบับเต็ม &rarr;
                   </a>
                 ) : (
@@ -443,7 +449,30 @@ function Dashboard(){
 <footer style={{ textAlign: "center", padding: "30px", fontSize: "12px", color: "var(--text-muted)" }}>
         หน่วยสื่อสารองค์กร สำนักหอสมุด มหาวิทยาลัยเชียงใหม่ &middot; PR CMUL Dashboard <br />
         Developed by Thianrawich and Mod-Ngarm Team | Copyright &copy; 2026
+<footer style={{ textAlign: "center", padding: "30px", fontSize: "12px", color: "var(--text-muted)" }}>
+        หน่วยสื่อสารองค์กร สำนักหอสมุด มหาวิทยาลัยเชียงใหม่ &middot; PR CMUL Dashboard <br />
+        Developed by Thianrawich and Mod-Ngarm Team | Copyright &copy; 2026
       </footer>
+
+      {/* หน้าจอ Loading Overlay (วางตรงนี้เลยครับ) */}
+      <div className={`loading-overlay ${isNavigating ? 'active' : ''}`}>
+        <div className="graph-loader">
+          <div className="graph-bar"></div>
+          <div className="graph-bar"></div>
+          <div className="graph-bar"></div>
+          <div className="graph-bar"></div>
+          <div className="graph-bar"></div>
+        </div>
+        <div className="loading-text">
+          กำลังโหลดรายงานจากระบบคลังจัดเก็บเอกสาร<br />
+          <span className="loading-subtext">หน่วยสื่อสารองค์กร</span>
+        </div>
+      </div>
+
+    </div>
+  );
+}     
+</footer>
     </div>
   );
 }
