@@ -102,6 +102,67 @@ body { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; background: var(--b
 .c-btn-empty { background: #e2e8f0; color: #64748b; cursor: not-allowed; }
 
 @media (max-width: 768px) { .cards-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 24px; } }
+/* =========================================
+   หน้าจอโหลดดิ้ง (Loading Overlay)
+   ========================================= */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  backdrop-filter: blur(8px);
+}
+.loading-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* อนิเมชันกราฟคลื่น (Graph Wave) */
+.graph-loader {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 50px;
+  margin-bottom: 24px;
+}
+.graph-bar {
+  width: 10px;
+  height: 50px;
+  background: linear-gradient(to top, #2563eb, #0ea5e9);
+  border-radius: 6px;
+  animation: graph-wave 1.2s ease-in-out infinite;
+  transform-origin: bottom;
+}
+.graph-bar:nth-child(1) { animation-delay: 0.0s; height: 30%; }
+.graph-bar:nth-child(2) { animation-delay: 0.1s; height: 70%; }
+.graph-bar:nth-child(3) { animation-delay: 0.2s; height: 100%; }
+.graph-bar:nth-child(4) { animation-delay: 0.3s; height: 50%; }
+.graph-bar:nth-child(5) { animation-delay: 0.4s; height: 80%; }
+
+@keyframes graph-wave {
+  0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+.loading-text {
+  text-align: center;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.loading-subtext {
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+}
 </style>
 <script>
 // --- AUTH BLOCK (รักษาความปลอดภัยเหมือนเดิม) ---
@@ -272,7 +333,20 @@ function getUser(){try{return JSON.parse(localStorage.getItem('cc_pr_user'));}ca
 function Dashboard(){
   const[selectedYear,setSelectedYear]=useState(2568);
   const user=getUser();
+// 1. เพิ่มตัวแปรเช็คสถานะการโหลด
+  const [isNavigating, setIsNavigating] = useState(false);
 
+  // 2. ฟังก์ชันหน่วงเวลาก่อนเปิดหน้าใหม่
+  const handleNavigate = (e, link) => {
+    e.preventDefault(); // หยุดไม่ให้ลิงก์ทำงานทันที
+    setIsNavigating(true); // เปิดหน้าจอโหลดดิ้ง
+    
+    // ตั้งเวลา 1.5 วินาที (1500 ms) แล้วค่อยพาไปหน้าใหม่
+    setTimeout(() => {
+      window.location.href = link;
+    }, 1500); 
+  };
+  
   useEffect(()=>{
     const TIMEOUT_MS=30*60*1000;
     function updateActivity(){localStorage.setItem('cc_pr_lastActivity',Date.now().toString());}
