@@ -98,34 +98,55 @@
 
   .footer-text { text-align: center; margin-top: 30px; color: var(--text-muted); font-size: 0.75rem; line-height: 1.5; }
 
-  /* Success Overlay (Light Mode) */
+  /* Success Overlay & Card */
   .success-overlay {
     position: fixed; inset: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: center; flex-direction: column;
-    background: #fff; opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(240, 244, 255, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
   }
   .success-overlay.show { opacity: 1; pointer-events: all; }
   
-  .check-circle {
-    width: 80px; height: 80px; border-radius: 50%; background: var(--success);
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 10px 30px rgba(5, 150, 105, 0.25); transform: scale(0); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s;
+  .success-card {
+    background: #fff; border-radius: 28px; padding: 45px 30px; text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1); max-width: 400px; width: 90%;
+    transform: translateY(30px) scale(0.95); transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
-  .success-overlay.show .check-circle { transform: scale(1); }
+  .success-overlay.show .success-card { transform: translateY(0) scale(1); }
+
+  .status-icon-wrap { height: 80px; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; }
+
+  /* อนิเมชันโหลดดิ้ง */
+  .auth-spinner {
+    width: 65px; height: 65px; border: 4px solid #f1f5f9;
+    border-top-color: var(--primary); border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  /* อนิเมชันติ๊กถูก */
+  .check-circle {
+    width: 75px; height: 75px; border-radius: 50%; background: var(--success);
+    display: none; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px rgba(5, 150, 105, 0.25);
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  @keyframes popIn { 0% { transform: scale(0); } 80% { transform: scale(1.1); } 100% { transform: scale(1); } }
   .check-circle svg { width: 40px; height: 40px; fill: white; }
 
-  .welcome-h2 { font-size: 1.5rem; font-weight: 700; color: var(--text); margin-top: 25px; text-align: center; }
+  .welcome-h2 { font-size: 1.2rem; font-weight: 500; color: var(--text-muted); margin-top: 10px; line-height: 1.4; transition: 0.3s; }
+  .welcome-name { font-size: 1.7rem; font-weight: 700; color: var(--primary); display: block; margin-top: 8px; letter-spacing: -0.5px;}
+  
   .role-badge {
-    display: inline-block; padding: 5px 16px; border-radius: 20px;
-    font-size: 0.85rem; font-weight: 700; margin-top: 12px;
+    display: inline-block; padding: 6px 18px; border-radius: 20px;
+    font-size: 0.9rem; font-weight: 700; margin-top: 15px;
   }
   .role-badge.head { background: rgba(219,39,119,0.1); color: #db2777; }
   .role-badge.admin { background: rgba(37,99,235,0.1); color: #2563eb; }
 
   .go-btn {
     margin-top: 30px; padding: 15px 45px; background: var(--primary-gradient);
-    color: white; text-decoration: none; font-weight: 600; border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.2); transition: 0.3s;
+    color: white; text-decoration: none; font-weight: 600; border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.2); transition: 0.3s; display: inline-block;
   }
   .go-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(124, 58, 237, 0.3); }
 
@@ -182,13 +203,22 @@
 </div>
 
 <div class="success-overlay" id="successOverlay">
-  <div class="check-circle">
-    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+  <div class="success-card">
+    <div class="status-icon-wrap">
+      <div class="auth-spinner" id="authSpinner"></div>
+      
+      <div class="check-circle" id="authCheck">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+      </div>
+    </div>
+    
+    <h2 class="welcome-h2" id="welcomeText">กำลังเข้าสู่ระบบ...</h2>
+    <div class="role-badge" id="roleBadge" style="display: none;"></div>
+    
+    <br>
+    <a href="javascript:void(0)" class="go-btn" id="goBtn" onclick="goToDashboard()" style="display: none;">เข้าสู่ Dashboard →</a>
+    <p style="margin-top: 18px; color: var(--text-muted); font-size: 0.85rem; display: none;" id="redirectMsg"></p>
   </div>
-  <h2 class="welcome-h2" id="welcomeText"></h2>
-  <div class="role-badge" id="roleBadge"></div>
-  <a href="javascript:void(0)" class="go-btn" onclick="goToDashboard()">เข้าสู่ Dashboard →</a>
-  <p style="margin-top: 15px; color: var(--text-muted); font-size: 0.85rem;" id="redirectMsg"></p>
 </div>
 
 <script>
@@ -197,7 +227,7 @@
   const defaultAccounts = {
     'thanapun.k': { password: 'oat44567', displayName: 'คุณธนะพันธุ์ การคนซื่อ', role: 'head', roleLabel: 'หัวหน้าหน่วยสื่อสารองค์กร' },
     'apinanun.s': { password: 'lib44567', displayName: 'คุณอาภินานันท์ ศรีมา', role: 'admin', roleLabel: 'นักประชาสัมพันธ์ (ผู้ดูแลระบบ)' },
-    'thian': { password: 'lib498800', displayName: 'คุณเธียรวิชญ์ พิชญนันท์กุล', role: 'admin', roleLabel: 'ผู้ดูแลระบบ (ขั้นสูงสุด)' }
+    'thian': { password: 'thian220340-', displayName: 'คุณเธียรวิชญ์ พิชญนันท์กุล', role: 'admin', roleLabel: 'ผู้ดูแลระบบ (ขั้นสูงสุด)' }
   };
 
   let accounts = defaultAccounts;
@@ -242,29 +272,55 @@
         clearInterval(waitTimer);
         const acc = accounts[user];
         if (acc && acc.password === pass) {
-          const loggedInUser = {
-            username: user,
-            displayName: acc.displayName,
-            role: acc.role,
-            roleLabel: acc.roleLabel,
-            loggedInAt: new Date().toISOString()
-          };
-          localStorage.setItem('cc_pr_user', JSON.stringify(loggedInUser));
-          localStorage.setItem('cc_pr_lastActivity', Date.now().toString());
-
-          document.getElementById('welcomeText').textContent = 'ยินดีต้อนรับ, ' + acc.displayName;
-          document.getElementById('roleBadge').textContent = acc.roleLabel;
-          document.getElementById('roleBadge').className = 'role-badge ' + acc.role;
+          // โชว์หน้าจอโหลดแบบหมุนๆ ก่อน
+          document.getElementById('authSpinner').style.display = 'block';
+          document.getElementById('authCheck').style.display = 'none';
+          document.getElementById('welcomeText').innerHTML = 'กำลังตรวจสอบข้อมูล<br>และเตรียมระบบ...';
+          document.getElementById('roleBadge').style.display = 'none';
+          document.getElementById('goBtn').style.display = 'none';
+          document.getElementById('redirectMsg').style.display = 'none';
           document.getElementById('successOverlay').classList.add('show');
 
-          let count = 3;
-          const msg = document.getElementById('redirectMsg');
-          msg.textContent = `กำลังพาคุณไปหน้า Dashboard ใน ${count} วินาที...`;
-          let timer = setInterval(() => {
-            count--;
-            if (count <= 0) { clearInterval(timer); goToDashboard(); }
-            else { msg.textContent = `กำลังพาคุณไปหน้า Dashboard ใน ${count} วินาที...`; }
-          }, 1000);
+          // หน่วงเวลา 3 วินาที (3000 ms) ก่อนเปลี่ยนเป็นเครื่องหมายติ๊กถูกและข้อความยินดีต้อนรับ
+          setTimeout(() => {
+            const loggedInUser = {
+              username: user,
+              displayName: acc.displayName,
+              role: acc.role,
+              roleLabel: acc.roleLabel,
+              loggedInAt: new Date().toISOString()
+            };
+            localStorage.setItem('cc_pr_user', JSON.stringify(loggedInUser));
+            localStorage.setItem('cc_pr_lastActivity', Date.now().toString());
+
+            // ซ่อนที่หมุนๆ และโชว์เครื่องหมายติ๊กถูกแบบเด้ง (Pop)
+            document.getElementById('authSpinner').style.display = 'none';
+            document.getElementById('authCheck').style.display = 'flex';
+            
+            // จัดเรียงข้อความ ยินดีต้อนรับ (บรรทัดบน) และ ชื่อ (บรรทัดล่างตัวใหญ่)
+            document.getElementById('welcomeText').innerHTML = 'ยินดีต้อนรับ<span class="welcome-name">' + acc.displayName + '</span>';
+            
+            const badge = document.getElementById('roleBadge');
+            badge.textContent = acc.roleLabel;
+            badge.className = 'role-badge ' + acc.role;
+            badge.style.display = 'inline-block';
+
+            document.getElementById('goBtn').style.display = 'inline-block';
+            
+            const msg = document.getElementById('redirectMsg');
+            msg.style.display = 'block';
+            
+            // เริ่มนับถอยหลังเข้าสู่ Dashboard
+            let count = 3;
+            msg.textContent = `กำลังพาคุณไปหน้า Dashboard ใน ${count} วินาที...`;
+            let timer = setInterval(() => {
+              count--;
+              if (count <= 0) { clearInterval(timer); goToDashboard(); }
+              else { msg.textContent = `กำลังพาคุณไปหน้า Dashboard ใน ${count} วินาที...`; }
+            }, 1000);
+
+          }, 3000); // 3000 คือ 3 วินาที
+
         } else {
           btn.classList.remove('loading');
           error.classList.add('show');
